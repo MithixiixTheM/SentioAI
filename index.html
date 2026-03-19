@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SentioAI</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #111;
+    color: #fff;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  /* Particelle */
+  #particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding: 50px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+  }
+
+  h1 {
+    font-size: 4em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  p {
+    font-size: 1.3em;
+    max-width: 900px;
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 0.9em;
+    color: #aaa;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- SEZIONE 1 -->
+<section id="hero">
+  <h1>SentioAI</h1>
+  <p>L’intelligenza artificiale empatica con avatar. Riconosce le emozioni tramite voce, testo ed espressioni facciali, rendendo le interazioni digitali più umane e naturali.</p>
+</section>
+
+<!-- SEZIONE 2 -->
+<section id="info">
+  <h2>Perché SentioAI</h2>
+  <p>Oggi la comunicazione digitale è spesso fredda e impersonale, perché le emozioni non vengono percepite correttamente. SentioAI nasce per colmare questo divario, analizzando voce, testo ed espressioni facciali per offrire risposte empatiche e personalizzate. L’obiettivo è rendere la comunicazione digitale più umana ed empatica, aiutando le persone a sentirsi comprese e supportate.</p>
+
+  <p>Grazie a tecnologie avanzate come intelligenza artificiale, elaborazione del linguaggio naturale e riconoscimento facciale, SentioAI comprende lo stato emotivo in tempo reale. Può essere utilizzata a scuola, nel lavoro o nella vita quotidiana, migliorando relazioni, collaborazione e benessere emotivo.</p>
+
+  <p>Il futuro di SentioAI punta a riconoscere emozioni ancora più sottili e ad interagire con avatar sempre più realistici, offrendo supporto emotivo in ogni contesto. Privacy e sicurezza dei dati sono garantite, perché comprendere le emozioni non significa rinunciare alla protezione personale.</p>
+</section>
+
+<footer>
+  © 2026 SentioAI – Tutti i diritti riservati
+</footer>
+
+<script>
+  // Particelle animate
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const particlesArray = [];
+  const particleCount = 150;
+
+  class Particle {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 3 + 1;
+      this.speedX = (Math.random() - 0.5) * 1;
+      this.speedY = (Math.random() - 0.5) * 1;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if(this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+      if(this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    }
+    draw() {
+      ctx.fillStyle = 'rgba(255,255,255,0.5)';
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+      ctx.fill();
+    }
+  }
+
+  for(let i=0;i<particleCount;i++) particlesArray.push(new Particle());
+
+  function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particlesArray.forEach(p => {p.update(); p.draw();});
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+
+  // Effetto movimento leggero delle sezioni in base al cursore
+  document.addEventListener('mousemove', e => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 20;
+    const y = (e.clientY / window.innerHeight - 0.5) * 20;
+    document.querySelectorAll('section').forEach(sec => {
+      sec.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  });
+</script>
+
+</body>
+</html>
